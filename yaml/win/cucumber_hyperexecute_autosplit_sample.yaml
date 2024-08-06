@@ -37,9 +37,9 @@ uploadArtefacts:
   - name: XmlReports
     path:
       - target/surefire-reports/testng-results.xml
-    email:
-     to:
-        - John Doe johndoe@example.com>
+    # email:
+    #  to:
+    #     - John Doe johndoe@example.com>
   - name: JsonReports
     path:
       - target/cucumber-reports/CucumberTestReport.json
@@ -49,9 +49,9 @@ partialReports:
   location: target/cucumber-reports/
   frameworkName: cucumber
   type: json
-  email:
-   to:
-    - John Doe johndoe@example.com>
+  # email:
+  #  to:
+  #   - John Doe johndoe@example.com>
 
 testDiscovery:
   type: raw
