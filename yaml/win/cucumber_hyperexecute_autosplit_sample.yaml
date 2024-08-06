@@ -37,7 +37,7 @@ uploadArtefacts:
       - target/surefire-reports/testng-results.xml
     email:
      to:
-        - mayurpQAAA@lambdatest.com
+        - John Doe johndoe@example.com>
   - name: JsonReports
     path:
       - target/cucumber-reports/CucumberTestReport.json
@@ -49,7 +49,7 @@ partialReports:
   type: json
   email:
    to:
-    - mayurpQAAA@lambdatest.com
+    - John Doe johndoe@example.com>
 
 testDiscovery:
   type: raw
