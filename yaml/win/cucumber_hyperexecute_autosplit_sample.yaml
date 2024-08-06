@@ -1,67 +1,263 @@
 ---
-version: 0.1
 globalTimeout: 90
 testSuiteTimeout: 90
 testSuiteStep: 90
-
-runson: win13
-
+matrix:
+  os: [win]
+  browser: ["chrome"]
+  version: ["latest"]
+  selenium_version: [4.18.0]
+runson: ${matrix.os}
+# runson: win
 autosplit: true
-retryOnFailure: true
+retryOnFailure: false
+maxRetries: 2
+concurrency: 1
+# winParallelism: 1
+# macParallelism: 1
+# linuxParallelism: 1
+testRunnerCommand: mvn test `-Dcucumber.options=$test `-Dscenario=$test `-Dmaven.repo.local=m2_cache_dir `-Dbrowser=$browser `-Dversion=$version `-Dselenium_version=$selenium_version
+# testRunnerCommand: mvn test -Dcucumber.options="$test" -Dscenario="$test" -Dmaven.repo.local=m2_cache_dir
+winTestRunnerCommand: mvn test `-Dcucumber.options="$test" `-Dscenario="$test" `-Dmaven.repo.local=m2_cache_dir `-Dbrowser=$browser `-Dversion=$version `-Dselenium_version=$selenium_version
+#win11TestRunnerCommand: mvn test `-Dcucumber.options="$test" `-Dscenario="$test" `-Dmaven.repo.local=m2_cache_dir `-Dbrowser=$browser `-Dversion=$version
+macTestRunnerCommand: mvn test -Dcucumber.options="$test" -Dscenario="$test" -Dmaven.repo.local=m2_cache_dir -Dbrowser=$browser -Dversion=$version -Dselenium_version=$selenium_version
+linuxTestRunnerCommand: mvn test -Dcucumber.options="$test" -Dscenario="$test" -Dmaven.repo.local=m2_cache_dir -Dbrowser=$browser -Dversion=$version -Dselenium_version=$selenium_version
+dataJsonPath: ['src/datame.json']
+# debug: true
+# captureCSVResult: true
+# smartGrid: true
+# bash: shell
 
-maxRetries: 1
-concurrency: 4
-
-env:
-  # PAT: ${{ .secrets.testKey }}
-  CACHE_DIR: m2_cache_dir
-
-# Dependency caching for Windows
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - ${CACHE_DIR}
-runtime:
-  - language: java
-    version: '21'
-  - language: python
-    version: '3.10'
+#mvn test -Dcucumber.options="src/main/java/Features/googlesearch_1.feature:18" -Dmaven.repo.local=m2_cache_dir -Dbrowser=chrome -Dversion=dev -Dselenium_version=3.13
 pre:
-  # Download and install packages in the CACHE_DIR.
-  # Skip execution of the tests in the pre step
-  - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
+  # - docker-compose --version
+  # - node -v
+  # - npm install axios
+  # - node testname.js 196260 209177
+  # - kill $(ps aux | grep 'foreman' | awk '{print $2}')
+  # - REG ADD HKLM\SOFTWARE\Policies\Microsoft\Edge /v ShowRecommendationsEnabled /t REG_DWORD /d 0
+  # - REG ADD HKLM\SOFTWARE\Policies\Microsoft\Edge /v PersonalizationReportingEnabled /t REG_DWORD /d 0
+  # - grep --version
 
-post:
-  - cat yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
+  # - npm install
+  # - curl -o cache/file.bin https://speed.hetzner.de/1GB.bin
+  # - curl -o cache/file1.bin https://speed.hetzner.de/1GB.bin
+  # - mayur
+  # - ls
+  # - sleep 20
+  # - MSBuild.exe
+  # - vstest.console.exe
+  # - ping google.com
+  # - ping lambdatest.com
+  # - ping cloudfare.com
+  # - sudo rm -rf /Library/Java/JavaVirtualMachines/
+  - printenv
+  - java -version
+  - node --version
+  - python --version
+  - curl -vvv https://www.google.com/
+  # - mvn --version
+  # - azcopy --version
+  # - dotnet --version
+  # # - ls -la /usr/bin/java
+  # # - ls -la /usr/local/opt/node@14/bin/node
+  # # - ls -la /usr/local/bin/python
+  # # - ls -la /usr/local/bin/mvn
+  # # - ls -la /usr/local/bin/dotnet
+  # # - ls -la /usr/local/bin/azcopy
+  # - sudo rm -rf /Library/Java/JavaVirtualMachines/
+  # - sudo rm -rf /Users/ltuser/.nvm/versions/node/v14.21.3/bin/node
+  # - sudo rm -rf /usr/local/bin/node
+  # - sudo rm -rf /usr/local/bin/python
+  # - sudo rm -rf /opt/maven
+  # - curl -O https://raw.githubusercontent.com/dotnet/sdk/main/scripts/obtain/uninstall/dotnet-uninstall-pkgs.sh
+  # - chmod u+x dotnet-uninstall-pkgs.sh
+  # - sudo ./dotnet-uninstall-pkgs.sh
+  # - sudo rm -rf /usr/local/bin/azcopy
+  # - java -version
+  # - node --version
+  # - python --version
+  # - mvn --version
+  # - azcopy --version
+  # - dotnet --version
+  # - which java
+  # - which node
+  # - which python
+  # - which mvn
+  # - which dotnet
+  # - which azcopy
+  # - python3 --version
+  # - curl -o local.html http://127.0.0.1:8000/
+  # - cat local.html
+  # - sed -i -e 's/TOKEN/%PAT%/g' key.py
+  # - curl https://ipinfo.io/
+  # - ipconfig getifaddr en0
+  # - echo ${PAT}
+  # - python key.py ${PAT}
+  # - echo ${{ .secrets.PAT_TOKEN }} | base64
+  # - echo ${{ .secrets.PAT_TOKEN5 }} | base64
+  # - echo ${MySecret1} | base64
+  # - echo ${MySecret2} | base64
+  # - echo ${MySecret3} | base64
+  # - echo ${{ .secrets.MYT1 }} | base64
+  # - echo ${{ .secrets.MYT2 }} | base64
+  # - echo ${{ .secrets.MYT3 }} | base64
+  # - echo ${{ .secrets.MYT4 }} | base64
+  # - echo ${{ .secrets.MYT5 }} | base64
+  # - echo ${{ .secrets.MYT6 }} | base64
+  # - echo ${{ .secrets.MYT7 }} | base64
+  # - echo ${{ .secrets.MYT8 }} | base64
+  # - echo ${{ .secrets.MYT9 }} | base64
+  # - echo ${{ .secrets.MYT10 }} | base64
+  # - echo ${{ .secrets.MYT11 }} | base64
+  # - echo ${{ .secrets.MYT12 }} | base64
+  # - echo ${{ .secrets.MYT13 }} | base64
+  # - echo ${{ .secrets.MYT14 }} | base64
+  # - echo ${{ .secrets.MYT15 }} | base64
+  # - echo ${{ .secrets.MYT16 }} | base64
+  # - echo ${{ .secrets.MYT17 }} | base64
+  # - echo ${{ .secrets.MYT18 }} | base64
+  # - echo ${{ .secrets.MYT19 }} | base64
+  # - echo ${{ .secrets.MYT20 }} | base64
+  
+  # - cat secrets_my
+  # - python3 cookie.py
 
+
+  # - mvn --version
+  # - ./mvnw -N wrapper:wrapper -Dmaven=3.10.1
+  # - mvn --version
+  # - katalonc -v
+  # - cat hyperexecute.yaml
+  - mvn -Dmaven.repo.local=m2_cache_dir -Dmaven.test.skip=true install
+  # - python logs.py
+  # - python logs.py
+  # - python logs.py
+  # - python logs.py
+  # - python logs.py
+  # - mvn -Dmaven.repo.local=m2_cache_dir -Dmaven.test.skip=true install
+# betaFeature:
+#     dedicated: true
+#    setPartiallyCompletedAsCompleted: true
+# failFast:
+#   maxNumberOfTests: 2
+# env:
+#   # HE_CACHE_CONTEXT_DISABLE_CDN: true
+#    PAT: ${{ .secrets.Token }}
+# env:
+#   MySecret1: ${{.secrets.PAT_TOKEN}}
+#   MySecret3 : ${{.secrets.PAT_TOKEN5}}
+uploadArtifacts:
+ - name: Files
+   path:
+     - Files/**
+     - src/main/java/Features/
+  #  email:
+  #   to:
+  #    - John Doe johndoe@example.com>
+   #   - shirishs@lambdatest.com
+ # - name: src
+ #   path:
+ #     - src/main/java/Features/
+# debug: true
+# frameworkStatusOnly: false
 mergeArtifacts: true
-
-uploadArtefacts:
-  - name: XmlReports
-    path:
-      - target/surefire-reports/testng-results.xml
-    # email:
-    #  to:
-    #     - John Doe johndoe@example.com>
-  - name: JsonReports
-    path:
-      - target/cucumber-reports/CucumberTestReport.json
-
-report: true
-partialReports:
-  location: target/cucumber-reports/
-  frameworkName: cucumber
-  type: json
-  # email:
-  #  to:
-  #   - John Doe johndoe@example.com>
-
+stripParentDirectory: true
+# captureScreenRecordingForScenarios: true
+# limitConcurrency: true
+# taskIdentifierInNonConflictingArtefacts: true
+post:
+  # - curl -o local2.html http://127.0.0.1:8000/
+  # - cat local2.html
+  - node --version
+  - cat time.txt
+  - cat hyperexecute.yaml
+  # - curl http://212.183.159.230/100MB.zip --output test1.zip
+  # - cat longlogs.txt
+# jobLabel: [ 'dalbir issue']
+jobLabel: [ 'HYP-10213']
+# jobLabel: [ '100 task', '2000 test', '20 per task']
+# jobLabel: [ "Prod1", "mcas-test5", "Periodical", "SamlProxy", "Access", "DEFAULT", "Chrome", "Add-branch-version", "Prod1", "mcas-test5", "Periodical", "SamlProxy", "Access", "DEFAULT", "Chrome", "Add-branch-version", "Prod1", "mcas-test5", "Periodical", "SamlProxy", "SamlProxy1"]
+# dynamicAllocation: true
+version: "0.1"
 testDiscovery:
   type: raw
   mode: dynamic
-  #Parallel execution at feature level
-  #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
-  command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
-
-testRunnerCommand: mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $test"
-
-jobLabel: [selenium-cucumber-java, win, autosplit]
+  # type: automatic
+  # mode: static
+  # args:
+  #   featureFilePaths: src/main/java/Features/
+  #   frameWork: java
+  # command: cat raw.txt
+  command: snooper --featureFilePaths=src/main/**/ --frameWork=java --specificTags=@Subtraction | sed -n 1,'1p' #@addition @Subtraction @Multiplication @Division @Modulus | sed -n 1,'5p' #--specificTags=@Subtraction #@addition @Subtraction @Multiplication @Division @Modulus # --ignoredTags=@feature7 | sed 's/:.*//' | uniq #@Subtraction @Multiplication @Division
+  # command: snooper --featureFilePaths=src/main/**/ --frameWork=java --specificTags=@Subtraction @addition @Subtraction @Multiplication @Division @Modulus #--specificTags=@Subtraction | sed -n 1,'p'
+# tunnel: true
+# tunnelNames: ["mayurhypqa"]
+# tunnelOpts:
+#   args: [--verbose ]
+#   testsPerTunnel: 3
+#   preOnly: true
+  # checkTunnelOnFailure: true
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - Files
+#   - node_modules
+report: true
+partialReports:
+ location: target/cucumber-reports
+ type: json
+ frameworkName: cucumber  
+#  email:
+#   to:
+#     - John Doe johndoe@example.com>
+# GenerateArtifactAfterEveryStage: true
+# frameworkStatusOnly: true
+runtime:
+  - language: java
+    version: '21'
+  #   addons:
+  #     - name: gauge
+  #       version: '1.5.6'
+  #     - name: gradle
+  #       version: '7.6'
+  - language: python
+    version: '3.10'
+  # - language: node
+  #   version: '16'
+  # - language: dotnet
+  #   version: "6.0.303"
+# runtime:
+#   language: java
+#   version: "8"
+  # language: python
+  # version: 3.9
+#   language: dotnet
+#   version: "7.0.100-preview.6.22352.1"
+#   include-prerelease: true
+#   language: dotnet
+#   version: "6.0.303"
+  # language: java
+  # version: "17"
+  # language: python
+  # version: "3.8"
+#   language: node
+#   version: "16"
+# runtime:
+#   language: java
+#   version: "18"
+#   addons:
+#    - name: "gradle"
+#      version : "6.9"
+# background:
+#   - node helloword/app.js
+#   - G:\lambda-node-remote-client\martian.exe -addr :65531 -api-addr :65532
+  # - /Users/ltuser/lrc/lambda-node-remote-client/martian -addr :65531 -api-addr :65532
+  # - /home/ltuser/scripts/martian -addr :65531 -api-addr :65532
+# project:
+#   name: MSFT-Mayur
+# differentialUpload:
+#   enabled: true
+#   ttlHours: 2
+# hostsOverride: 
+#   - host: www.google.com 
+#     ip: 127.0.0.2
