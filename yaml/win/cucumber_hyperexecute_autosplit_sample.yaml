@@ -35,6 +35,9 @@ uploadArtefacts:
   - name: XmlReports
     path:
       - target/surefire-reports/testng-results.xml
+    email:
+     to:
+        - mayurpQAAA@lambdatest.com
   - name: JsonReports
     path:
       - target/cucumber-reports/CucumberTestReport.json
@@ -44,6 +47,9 @@ partialReports:
   location: target/cucumber-reports/
   frameworkName: cucumber
   type: json
+  email:
+   to:
+    - mayurpQAAA@lambdatest.com
 
 testDiscovery:
   type: raw
